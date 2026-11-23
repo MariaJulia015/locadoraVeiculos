@@ -1,0 +1,9 @@
+function App() {
+  return (
+    <div className="container py-4">
+      <h1 className="h3">Locadora de Veículos</h1>
+    </div>
+  );
+}
+
+export default App;
