@@ -1,6 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
+import { ClienteForm } from "./pages/clientes/ClienteForm";
+import { ClienteList } from "./pages/clientes/ClienteList";
+import { ManutencaoForm } from "./pages/manutencoes/ManutencaoForm";
+import { ManutencaoList } from "./pages/manutencoes/ManutencaoList";
+import { VeiculoForm } from "./pages/veiculos/VeiculoForm";
+import { VeiculoList } from "./pages/veiculos/VeiculoList";
 import { CategoriaForm } from "./pages/categorias/CategoriaForm";
 import { CategoriaList } from "./pages/categorias/CategoriaList";
 import { MarcaForm } from "./pages/marcas/MarcaForm";
@@ -24,6 +30,15 @@ function App() {
           <Route path="/modelos" element={<ModeloList />} />
           <Route path="/modelos/novo" element={<ModeloForm />} />
           <Route path="/modelos/:id" element={<ModeloForm />} />
+          <Route path="/veiculos" element={<VeiculoList />} />
+          <Route path="/veiculos/novo" element={<VeiculoForm />} />
+          <Route path="/veiculos/:id" element={<VeiculoForm />} />
+          <Route path="/manutencoes" element={<ManutencaoList />} />
+          <Route path="/manutencoes/novo" element={<ManutencaoForm />} />
+          <Route path="/manutencoes/:id" element={<ManutencaoForm />} />
+          <Route path="/clientes" element={<ClienteList />} />
+          <Route path="/clientes/novo" element={<ClienteForm />} />
+          <Route path="/clientes/:id" element={<ClienteForm />} />
         </Routes>
       </main>
     </>
