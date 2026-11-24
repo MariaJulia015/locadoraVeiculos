@@ -3,6 +3,8 @@ import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { ClienteForm } from "./pages/clientes/ClienteForm";
 import { ClienteList } from "./pages/clientes/ClienteList";
+import { DevolucaoForm } from "./pages/locacoes/DevolucaoForm";
+import { LocacaoDetalhe } from "./pages/locacoes/LocacaoDetalhe";
 import { LocacaoForm } from "./pages/locacoes/LocacaoForm";
 import { LocacaoList } from "./pages/locacoes/LocacaoList";
 import { ManutencaoForm } from "./pages/manutencoes/ManutencaoForm";
@@ -25,6 +27,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/locacoes" element={<LocacaoList />} />
           <Route path="/locacoes/nova" element={<LocacaoForm />} />
+          <Route path="/locacoes/:id" element={<LocacaoDetalhe />} />
+          <Route path="/locacoes/:id/devolucao" element={<DevolucaoForm />} />
           <Route path="/marcas" element={<MarcaList />} />
           <Route path="/marcas/novo" element={<MarcaForm />} />
           <Route path="/marcas/:id" element={<MarcaForm />} />
