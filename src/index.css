@@ -1,3 +1,84 @@
+/* Identidade visual Riguilida: preto, rosa e branco */
+:root {
+  --rg-rosa: #e80052;
+  --rg-rosa-escuro: #c20045;
+  --rg-preto: #080808;
+}
+
 body {
-  background-color: #f5f6f8;
+  background-color: #f4f4f6;
+}
+
+/* Barra superior */
+.navbar-riguilida {
+  background-color: var(--rg-preto);
+}
+
+.navbar-riguilida .navbar-brand img {
+  height: 44px;
+}
+
+.navbar-riguilida .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.navbar-riguilida .nav-link:hover,
+.navbar-riguilida .nav-link.active {
+  color: #ffffff;
+}
+
+.navbar-riguilida .nav-link.active {
+  box-shadow: inset 0 -2px 0 var(--rg-rosa);
+}
+
+/* Botões principais em rosa */
+.btn-primary {
+  --bs-btn-bg: var(--rg-rosa);
+  --bs-btn-border-color: var(--rg-rosa);
+  --bs-btn-hover-bg: var(--rg-rosa-escuro);
+  --bs-btn-hover-border-color: var(--rg-rosa-escuro);
+  --bs-btn-active-bg: var(--rg-rosa-escuro);
+  --bs-btn-active-border-color: var(--rg-rosa-escuro);
+  --bs-btn-disabled-bg: var(--rg-rosa);
+  --bs-btn-disabled-border-color: var(--rg-rosa);
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--rg-rosa);
+  --bs-btn-border-color: var(--rg-rosa);
+  --bs-btn-hover-bg: var(--rg-rosa);
+  --bs-btn-hover-border-color: var(--rg-rosa);
+  --bs-btn-active-bg: var(--rg-rosa-escuro);
+  --bs-btn-active-border-color: var(--rg-rosa-escuro);
+}
+
+.badge.bg-primary {
+  background-color: var(--rg-rosa) !important;
+}
+
+/* Campos com foco em rosa */
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--rg-rosa);
+  box-shadow: 0 0 0 0.2rem rgba(232, 0, 82, 0.15);
+}
+
+/* Cabeçalho das tabelas em preto */
+.table-dark {
+  --bs-table-bg: var(--rg-preto);
+}
+
+/* Faixa da página inicial */
+.banner-riguilida {
+  background-color: var(--rg-preto);
+  border-radius: 0.75rem;
+}
+
+.banner-riguilida img {
+  max-width: 100%;
+  height: auto;
+}
+
+.atalho-riguilida:hover {
+  border-color: var(--rg-rosa);
 }

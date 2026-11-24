@@ -12,10 +12,10 @@ const links = [
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <nav className="navbar navbar-expand-lg navbar-dark navbar-riguilida mb-4">
       <div className="container">
-        <Link className="navbar-brand" to="/">
-          Locadora de Veículos
+        <Link className="navbar-brand py-0" to="/">
+          <img src="/logo-riguilida.png" alt="Riguilida - Locadora de Carros" />
         </Link>
         <button
           className="navbar-toggler"

@@ -1,9 +1,11 @@
-# Locadora de Veículos
+# Riguilida – Locadora de Carros
+
+![Riguilida](public/logo-riguilida.png)
 
 **Aluna:** Maria Júlia Costa Teodoro  
 **Disciplina:** Tecnologia de Construção de Software I – PUC Goiás
 
-Aplicação web para gerenciar uma locadora de veículos: controla a frota (marcas, categorias, modelos, veículos e manutenções), os clientes e todo o ciclo de uma locação, da retirada à devolução, com contrato, vistorias, pagamentos e nota fiscal.
+Aplicação web da **Riguilida**, uma locadora de carros: controla a frota (marcas, categorias, modelos, veículos e manutenções), os clientes e todo o ciclo de uma locação, da retirada à devolução, com contrato, vistorias, pagamentos e nota fiscal.
 
 O front-end foi feito em **React com TypeScript** (Vite), com interface em **Bootstrap**, e consome uma API REST simulada com **JSON Server**.
 
