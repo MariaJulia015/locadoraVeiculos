@@ -3,6 +3,8 @@ import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { ClienteForm } from "./pages/clientes/ClienteForm";
 import { ClienteList } from "./pages/clientes/ClienteList";
+import { LocacaoForm } from "./pages/locacoes/LocacaoForm";
+import { LocacaoList } from "./pages/locacoes/LocacaoList";
 import { ManutencaoForm } from "./pages/manutencoes/ManutencaoForm";
 import { ManutencaoList } from "./pages/manutencoes/ManutencaoList";
 import { VeiculoForm } from "./pages/veiculos/VeiculoForm";
@@ -21,6 +23,8 @@ function App() {
       <main className="pb-5">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/locacoes" element={<LocacaoList />} />
+          <Route path="/locacoes/nova" element={<LocacaoForm />} />
           <Route path="/marcas" element={<MarcaList />} />
           <Route path="/marcas/novo" element={<MarcaForm />} />
           <Route path="/marcas/:id" element={<MarcaForm />} />
