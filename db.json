@@ -1,31 +1,245 @@
 {
   "marcas": [
-    { "id": "1", "nome": "Volkswagen" },
-    { "id": "2", "nome": "Chevrolet" },
-    { "id": "3", "nome": "Toyota" }
+    {
+      "id": "1",
+      "nome": "Volkswagen"
+    },
+    {
+      "id": "2",
+      "nome": "Chevrolet"
+    },
+    {
+      "id": "3",
+      "nome": "Toyota"
+    },
+    {
+      "id": "4",
+      "nome": "RAM"
+    },
+    {
+      "id": "5",
+      "nome": "BYD"
+    },
+    {
+      "id": "6",
+      "nome": "Fiat"
+    }
   ],
   "categorias": [
-    { "id": "1", "nome": "Econômico", "valorLocacao": 120.0 },
-    { "id": "2", "nome": "Intermediário", "valorLocacao": 180.0 },
-    { "id": "3", "nome": "SUV", "valorLocacao": 260.0 }
+    {
+      "id": "1",
+      "nome": "Econômico",
+      "valorLocacao": 120.0
+    },
+    {
+      "id": "2",
+      "nome": "Intermediário",
+      "valorLocacao": 180.0
+    },
+    {
+      "id": "3",
+      "nome": "SUV",
+      "valorLocacao": 260.0
+    },
+    {
+      "id": "4",
+      "nome": "Picape",
+      "valorLocacao": 320.0
+    },
+    {
+      "id": "5",
+      "nome": "Elétrico e Híbrido",
+      "valorLocacao": 240.0
+    }
   ],
   "modelos": [
-    { "id": "1", "nome": "Gol", "ano": 2024, "marcaId": "1", "categoriaId": "1" },
-    { "id": "2", "nome": "Onix", "ano": 2024, "marcaId": "2", "categoriaId": "2" },
-    { "id": "3", "nome": "Corolla Cross", "ano": 2025, "marcaId": "3", "categoriaId": "3" }
+    {
+      "id": "1",
+      "nome": "Gol",
+      "ano": 2024,
+      "marcaId": "1",
+      "categoriaId": "1"
+    },
+    {
+      "id": "2",
+      "nome": "Onix",
+      "ano": 2024,
+      "marcaId": "2",
+      "categoriaId": "2"
+    },
+    {
+      "id": "3",
+      "nome": "Corolla Cross",
+      "ano": 2025,
+      "marcaId": "3",
+      "categoriaId": "3"
+    },
+    {
+      "id": "4",
+      "nome": "Rampage",
+      "ano": 2025,
+      "marcaId": "4",
+      "categoriaId": "4"
+    },
+    {
+      "id": "5",
+      "nome": "Dolphin",
+      "ano": 2025,
+      "marcaId": "5",
+      "categoriaId": "5"
+    },
+    {
+      "id": "6",
+      "nome": "King",
+      "ano": 2026,
+      "marcaId": "5",
+      "categoriaId": "5"
+    },
+    {
+      "id": "7",
+      "nome": "Strada Ultra",
+      "ano": 2026,
+      "marcaId": "6",
+      "categoriaId": "4"
+    },
+    {
+      "id": "8",
+      "nome": "Toro",
+      "ano": 2025,
+      "marcaId": "6",
+      "categoriaId": "4"
+    },
+    {
+      "id": "9",
+      "nome": "Amarok",
+      "ano": 2025,
+      "marcaId": "1",
+      "categoriaId": "4"
+    }
   ],
   "veiculos": [
-    { "id": "1", "chassi": "9BWZZZ377VT004251", "placa": "ABC1D23", "anoFabricacao": 2024, "cor": "Prata", "kmRodado": 15000, "modeloId": "1" },
-    { "id": "2", "chassi": "9BGKS48U0RG123456", "placa": "QWE2F34", "anoFabricacao": 2024, "cor": "Branco", "kmRodado": 8200, "modeloId": "2" },
-    { "id": "3", "chassi": "9BRKZAAG5S0654321", "placa": "RTY3G45", "anoFabricacao": 2025, "cor": "Preto", "kmRodado": 3100, "modeloId": "3" }
+    {
+      "id": "1",
+      "chassi": "9BWZZZ377VT004251",
+      "placa": "ABC1D23",
+      "anoFabricacao": 2024,
+      "cor": "Prata",
+      "kmRodado": 15000,
+      "modeloId": "1"
+    },
+    {
+      "id": "2",
+      "chassi": "9BGKS48U0RG123456",
+      "placa": "QWE2F34",
+      "anoFabricacao": 2024,
+      "cor": "Branco",
+      "kmRodado": 8200,
+      "modeloId": "2"
+    },
+    {
+      "id": "3",
+      "chassi": "9BRKZAAG5S0654321",
+      "placa": "RTY3G45",
+      "anoFabricacao": 2025,
+      "cor": "Preto",
+      "kmRodado": 3100,
+      "modeloId": "3"
+    },
+    {
+      "id": "4",
+      "chassi": "9BD281A2XSYA10001",
+      "placa": "RMP4H21",
+      "anoFabricacao": 2025,
+      "cor": "Cinza",
+      "kmRodado": 5200,
+      "modeloId": "4"
+    },
+    {
+      "id": "5",
+      "chassi": "LGXCE4CB5S0020002",
+      "placa": "DLP5J32",
+      "anoFabricacao": 2025,
+      "cor": "Azul",
+      "kmRodado": 2100,
+      "modeloId": "5"
+    },
+    {
+      "id": "6",
+      "chassi": "LGXC74C40T0030003",
+      "placa": "KNG6K43",
+      "anoFabricacao": 2026,
+      "cor": "Branco",
+      "kmRodado": 800,
+      "modeloId": "6"
+    },
+    {
+      "id": "7",
+      "chassi": "9BD281A3XTYB40004",
+      "placa": "STR7L54",
+      "anoFabricacao": 2026,
+      "cor": "Vermelho",
+      "kmRodado": 1500,
+      "modeloId": "7"
+    },
+    {
+      "id": "8",
+      "chassi": "988226135SKC50005",
+      "placa": "TRO8M65",
+      "anoFabricacao": 2025,
+      "cor": "Preto",
+      "kmRodado": 9800,
+      "modeloId": "8"
+    },
+    {
+      "id": "9",
+      "chassi": "WV1DB42H2SA060006",
+      "placa": "AMK9N76",
+      "anoFabricacao": 2025,
+      "cor": "Prata",
+      "kmRodado": 7400,
+      "modeloId": "9"
+    }
   ],
   "manutencoes": [
-    { "id": "1", "data": "2026-10-10", "descricao": "Troca de óleo e filtros", "valor": 350.0, "veiculoId": "1" }
+    {
+      "id": "1",
+      "data": "2026-10-10",
+      "descricao": "Troca de óleo e filtros",
+      "valor": 350.0,
+      "veiculoId": "1"
+    }
   ],
   "clientes": [
-    { "id": "1", "nome": "Ana Souza", "cpf": "123.456.789-09", "cnh": "04512345678", "validadeCnh": "2029-05-20", "telefone": "(62) 99999-1111", "email": "ana.souza@email.com", "endereco": "Rua 10, 120 - Setor Oeste, Goiânia/GO" },
-    { "id": "2", "nome": "Bruno Lima", "cpf": "987.654.321-00", "cnh": "05698765432", "validadeCnh": "2028-11-02", "telefone": "(62) 98888-2222", "email": "bruno.lima@email.com", "endereco": "Av. T-63, 450 - Setor Bueno, Goiânia/GO" },
-    { "id": "3", "nome": "Carla Dias", "cpf": "456.789.123-45", "cnh": "03345678912", "validadeCnh": "2025-03-15", "telefone": "(62) 97777-3333", "email": "carla.dias@email.com", "endereco": "Rua 85, 30 - Setor Sul, Goiânia/GO" }
+    {
+      "id": "1",
+      "nome": "Ana Souza",
+      "cpf": "123.456.789-09",
+      "cnh": "04512345678",
+      "validadeCnh": "2029-05-20",
+      "telefone": "(62) 99999-1111",
+      "email": "ana.souza@email.com",
+      "endereco": "Rua 10, 120 - Setor Oeste, Goiânia/GO"
+    },
+    {
+      "id": "2",
+      "nome": "Bruno Lima",
+      "cpf": "987.654.321-00",
+      "cnh": "05698765432",
+      "validadeCnh": "2028-11-02",
+      "telefone": "(62) 98888-2222",
+      "email": "bruno.lima@email.com",
+      "endereco": "Av. T-63, 450 - Setor Bueno, Goiânia/GO"
+    },
+    {
+      "id": "3",
+      "nome": "Carla Dias",
+      "cpf": "456.789.123-45",
+      "cnh": "03345678912",
+      "validadeCnh": "2025-03-15",
+      "telefone": "(62) 97777-3333",
+      "email": "carla.dias@email.com",
+      "endereco": "Rua 85, 30 - Setor Sul, Goiânia/GO"
+    }
   ],
   "locacoes": [],
   "contratos": [],
