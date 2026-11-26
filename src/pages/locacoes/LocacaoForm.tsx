@@ -1,5 +1,5 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert } from "../../components/Alert";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
@@ -14,7 +14,7 @@ import type { Manutencao } from "../../models/Manutencao";
 import type { Modelo } from "../../models/Modelo";
 import { calcularSituacaoVeiculo, descreverVeiculo, type Veiculo } from "../../models/Veiculo";
 import { niveisCombustivel, type NivelCombustivel } from "../../models/Vistoria";
-import { dataHoje, formatarMoeda, mensagemDeErro } from "../../models/formatadores";
+import { dataHoje, formatarMoeda, mensagemDeErro, somarDias } from "../../models/formatadores";
 import { categoriaService } from "../../service/categoriaService";
 import { clienteService } from "../../service/clienteService";
 import { contratoService } from "../../service/contratoService";
@@ -28,7 +28,15 @@ type ErrosLocacao = Partial<Record<keyof Locacao, string>>;
 
 export const LocacaoForm = () => {
   const navigate = useNavigate();
-  const [locacao, setLocacao] = useState<Locacao>({ ...locacaoInicial, dataRetirada: dataHoje() });
+  // Grupo e diárias escolhidos na tela de grupos (opcionais)
+  const [parametros] = useSearchParams();
+  const categoriaEscolhida = parametros.get("categoria") ?? "";
+  const diariasEscolhidas = Number(parametros.get("diarias") ?? 0);
+  const [locacao, setLocacao] = useState<Locacao>({
+    ...locacaoInicial,
+    dataRetirada: dataHoje(),
+    dataDevolucaoPrevista: diariasEscolhidas > 0 ? somarDias(dataHoje(), diariasEscolhidas) : "",
+  });
   const [nivelCombustivel, setNivelCombustivel] = useState<NivelCombustivel>("CHEIO");
   const [observacoes, setObservacoes] = useState("");
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -62,9 +70,14 @@ export const LocacaoForm = () => {
   }, []);
 
   const hoje = dataHoje();
+  const categoriaDoVeiculo = (veiculo: Veiculo): string | undefined =>
+    modelos.find((modelo) => modelo.id === veiculo.modeloId)?.categoriaId;
   const veiculosDisponiveis = veiculos.filter(
-    (veiculo) => calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL",
+    (veiculo) =>
+      calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL" &&
+      (!categoriaEscolhida || categoriaDoVeiculo(veiculo) === categoriaEscolhida),
   );
+  const nomeGrupoEscolhido = categorias.find((categoria) => categoria.id === categoriaEscolhida)?.nome;
 
   const nomeModelo = (veiculo: Veiculo): string | undefined =>
     modelos.find((modelo) => modelo.id === veiculo.modeloId)?.nome;
@@ -163,6 +176,14 @@ export const LocacaoForm = () => {
     <div className="container" style={{ maxWidth: 900 }}>
       <h1 className="h3 mb-3">Nova locação</h1>
       <Alert type="danger" message={erro} onClose={() => setErro("")} />
+      {nomeGrupoEscolhido && (
+        <div className="alert alert-light border d-flex justify-content-between align-items-center">
+          <span>
+            Mostrando apenas veículos do grupo <strong>{nomeGrupoEscolhido}</strong>.
+          </span>
+          <Button label="Ver todos" variant="outline-secondary" size="sm" onClick={() => navigate("/locacoes/nova")} />
+        </div>
+      )}
 
       <form onSubmit={salvar} noValidate>
         <Card title="Dados da locação">

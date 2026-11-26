@@ -42,6 +42,7 @@ O arquivo `db.json` já vem com dados de exemplo (marcas, categorias, modelos, v
 - Histórico de manutenções por veículo (botão **Manutenções** na lista de veículos).
 
 **Processo de locação**
+- Tela de grupos com o valor da diária de cada categoria, o total pela quantidade de diárias, os modelos do grupo, quantos veículos estão disponíveis e o selo "Preferido do público" no grupo mais alugado. O botão **Escolher grupo** abre a nova locação já filtrada pelo grupo e com a devolução prevista preenchida.
 - Registro da locação escolhendo o cliente, um veículo disponível e as datas de retirada e devolução prevista.
 - Cálculo automático do valor previsto: nº de diárias × valor da diária da categoria.
 - Contrato gerado automaticamente, com número único e data de emissão.
@@ -87,6 +88,9 @@ locadora-veiculos/
 
 ### Início
 ![Início](prints/01-inicio.png)
+
+### Grupos e preços
+![Grupos](prints/11-grupos.png)
 
 ### Veículos e situação de cada um
 ![Veículos](prints/02-veiculos.png)
