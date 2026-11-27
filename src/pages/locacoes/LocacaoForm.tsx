@@ -14,7 +14,7 @@ import type { Manutencao } from "../../models/Manutencao";
 import type { Modelo } from "../../models/Modelo";
 import { calcularSituacaoVeiculo, descreverVeiculo, type Veiculo } from "../../models/Veiculo";
 import { niveisCombustivel, type NivelCombustivel } from "../../models/Vistoria";
-import { dataHoje, formatarMoeda, mensagemDeErro } from "../../models/formatadores";
+import { dataHoje, formatarData, formatarMoeda, mensagemDeErro } from "../../models/formatadores";
 import { categoriaService } from "../../service/categoriaService";
 import { clienteService } from "../../service/clienteService";
 import { contratoService } from "../../service/contratoService";
@@ -39,6 +39,7 @@ export const LocacaoForm = () => {
   const [nivelCombustivel, setNivelCombustivel] = useState<NivelCombustivel>("CHEIO");
   const [observacoes, setObservacoes] = useState("");
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [buscaCliente, setBuscaCliente] = useState("");
   const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
   const [modelos, setModelos] = useState<Modelo[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -74,6 +75,26 @@ export const LocacaoForm = () => {
   const veiculosDisponiveis = veiculos.filter(
     (veiculo) => calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL",
   );
+
+  // Busca de cliente por nome ou CPF (mostra no máximo 6 resultados)
+  const somenteNumeros = (texto: string) => texto.replace(/\D/g, "");
+  const termo = buscaCliente.trim().toLowerCase();
+  const clientesEncontrados =
+    termo.length < 2
+      ? []
+      : clientes
+          .filter(
+            (cliente) =>
+              cliente.nome.toLowerCase().includes(termo) ||
+              (somenteNumeros(termo).length > 0 && somenteNumeros(cliente.cpf).includes(somenteNumeros(termo))),
+          )
+          .slice(0, 6);
+  const clienteSelecionado = clientes.find((cliente) => cliente.id === locacao.clienteId);
+
+  const selecionarCliente = (clienteId: string) => {
+    setLocacao((atual) => ({ ...atual, clienteId }));
+    setBuscaCliente("");
+  };
 
   const nomeModelo = (veiculo: Veiculo): string | undefined =>
     modelos.find((modelo) => modelo.id === veiculo.modeloId)?.nome;
@@ -177,17 +198,77 @@ export const LocacaoForm = () => {
         <Card title="Dados da locação">
           <div className="row">
             <div className="col-md-6">
-              <Select
-                label="Cliente"
-                name="clienteId"
-                value={locacao.clienteId}
-                options={clientes.map((cliente) => ({
-                  value: cliente.id ?? "",
-                  label: `${cliente.nome}${cnhVencida(cliente, hoje) ? " (CNH vencida)" : ""}`,
-                }))}
-                onChange={handleChange}
-                error={erros.clienteId}
-              />
+              {clienteSelecionado ? (
+                <div className="mb-3">
+                  <span className="form-label d-block">Cliente</span>
+                  <div className="border rounded p-2 d-flex justify-content-between align-items-center">
+                    <div>
+                      <strong>{clienteSelecionado.nome}</strong>
+                      <small className="text-muted d-block">
+                        CPF {clienteSelecionado.cpf} ·{" "}
+                        {cnhVencida(clienteSelecionado, hoje) ? (
+                          <span className="text-danger">CNH vencida</span>
+                        ) : (
+                          `CNH válida até ${formatarData(clienteSelecionado.validadeCnh)}`
+                        )}
+                      </small>
+                    </div>
+                    <Button
+                      label="Trocar"
+                      variant="outline-secondary"
+                      size="sm"
+                      onClick={() => setLocacao((atual) => ({ ...atual, clienteId: "" }))}
+                    />
+                  </div>
+                  {erros.clienteId && <div className="text-danger small mt-1">{erros.clienteId}</div>}
+                </div>
+              ) : (
+                <>
+                  <Input
+                    label="Cliente"
+                    name="buscaCliente"
+                    value={buscaCliente}
+                    placeholder="Digite o nome ou o CPF"
+                    onChange={(event) => setBuscaCliente(event.target.value)}
+                    error={erros.clienteId}
+                  />
+                  {termo.length >= 2 && (
+                    <ul className="list-group mb-3" style={{ marginTop: "-0.5rem" }}>
+                      {clientesEncontrados.length === 0 && (
+                        <li className="list-group-item d-flex justify-content-between align-items-center">
+                          <span className="text-muted">Nenhum cliente encontrado.</span>
+                          <Button
+                            label="Cadastrar cliente"
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => navigate("/clientes/novo")}
+                          />
+                        </li>
+                      )}
+                      {clientesEncontrados.map((cliente) => (
+                        <li
+                          className="list-group-item d-flex justify-content-between align-items-center"
+                          key={cliente.id}
+                        >
+                          <span>
+                            {cliente.nome}
+                            <small className="text-muted d-block">
+                              CPF {cliente.cpf}
+                              {cnhVencida(cliente, hoje) && <span className="text-danger"> · CNH vencida</span>}
+                            </small>
+                          </span>
+                          <Button
+                            label="Selecionar"
+                            variant="outline-primary"
+                            size="sm"
+                            onClick={() => selecionarCliente(cliente.id ?? "")}
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
+              )}
             </div>
             <div className="col-md-6">
               <Select

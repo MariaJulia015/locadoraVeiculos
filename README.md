@@ -43,7 +43,7 @@ O arquivo `db.json` já vem com dados de exemplo (marcas, categorias, modelos, v
 
 **Processo de locação**
 - Veículos exibidos em cards com categoria, diária, situação, placa, cor e km. Nos carros disponíveis, o botão **Alugar** abre a nova locação com o veículo já selecionado.
-- Registro da locação escolhendo o cliente, um veículo disponível e as datas de retirada e devolução prevista.
+- Registro da locação buscando o cliente pelo nome ou CPF (sem precisar rolar uma lista), escolhendo um veículo disponível e as datas de retirada e devolução prevista.
 - Cálculo automático do valor previsto: nº de diárias × valor da diária da categoria.
 - Contrato gerado automaticamente, com número único e data de emissão.
 - Vistoria de retirada (km, nível de combustível e observações).
