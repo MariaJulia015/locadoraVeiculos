@@ -28,9 +28,9 @@ type ErrosLocacao = Partial<Record<keyof Locacao, string>>;
 
 export const LocacaoForm = () => {
   const navigate = useNavigate();
-  // Grupo e diárias escolhidos na tela de grupos (opcionais)
+  // Modelo e diárias escolhidos na tela "Nossos carros" (opcionais)
   const [parametros] = useSearchParams();
-  const categoriaEscolhida = parametros.get("categoria") ?? "";
+  const modeloEscolhido = parametros.get("modelo") ?? "";
   const diariasEscolhidas = Number(parametros.get("diarias") ?? 0);
   const [locacao, setLocacao] = useState<Locacao>({
     ...locacaoInicial,
@@ -70,14 +70,12 @@ export const LocacaoForm = () => {
   }, []);
 
   const hoje = dataHoje();
-  const categoriaDoVeiculo = (veiculo: Veiculo): string | undefined =>
-    modelos.find((modelo) => modelo.id === veiculo.modeloId)?.categoriaId;
   const veiculosDisponiveis = veiculos.filter(
     (veiculo) =>
       calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL" &&
-      (!categoriaEscolhida || categoriaDoVeiculo(veiculo) === categoriaEscolhida),
+      (!modeloEscolhido || veiculo.modeloId === modeloEscolhido),
   );
-  const nomeGrupoEscolhido = categorias.find((categoria) => categoria.id === categoriaEscolhida)?.nome;
+  const nomeModeloEscolhido = modelos.find((modelo) => modelo.id === modeloEscolhido)?.nome;
 
   const nomeModelo = (veiculo: Veiculo): string | undefined =>
     modelos.find((modelo) => modelo.id === veiculo.modeloId)?.nome;
@@ -176,10 +174,10 @@ export const LocacaoForm = () => {
     <div className="container" style={{ maxWidth: 900 }}>
       <h1 className="h3 mb-3">Nova locação</h1>
       <Alert type="danger" message={erro} onClose={() => setErro("")} />
-      {nomeGrupoEscolhido && (
+      {nomeModeloEscolhido && (
         <div className="alert alert-light border d-flex justify-content-between align-items-center">
           <span>
-            Mostrando apenas veículos do grupo <strong>{nomeGrupoEscolhido}</strong>.
+            Mostrando apenas veículos do modelo <strong>{nomeModeloEscolhido}</strong>.
           </span>
           <Button label="Ver todos" variant="outline-secondary" size="sm" onClick={() => navigate("/locacoes/nova")} />
         </div>

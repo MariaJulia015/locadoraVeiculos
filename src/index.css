@@ -83,36 +83,39 @@ body {
   border-color: var(--rg-rosa);
 }
 
-/* Tela de grupos (vitrine de preços) */
-.grupo-riguilida {
+/* Tela "Nossos carros": um card por modelo */
+.carro-riguilida {
   border: 1px solid #e3e3e6;
+  border-top: 4px solid var(--rg-preto);
 }
 
-.grupo-preferido {
-  border: 2px solid var(--rg-rosa);
+.carro-riguilida.carro-destaque {
+  border-top-color: var(--rg-rosa);
 }
 
-.selo-preferido {
-  background-color: #fde6ee;
+.carro-riguilida .nome-carro {
+  font-weight: 700;
+  color: var(--rg-preto);
+}
+
+.etiqueta-categoria {
+  border: 1px solid var(--rg-rosa);
   color: var(--rg-rosa-escuro);
   border-radius: 2rem;
-  padding: 0.5rem 1rem;
-  text-align: center;
-  font-weight: 600;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.8rem;
 }
 
-.titulo-grupo {
-  color: var(--rg-preto);
-  line-height: 1.4;
+.etiqueta-destaque {
+  background-color: var(--rg-rosa);
+  color: #ffffff;
+  border-radius: 2rem;
+  padding: 0.15rem 0.7rem;
+  font-size: 0.8rem;
 }
 
-.preco-grupo {
-  background-color: #f4f4f6;
-  border-radius: 0.75rem;
-}
-
-.preco-grupo .valor-diaria {
-  font-size: 2.2rem;
+.carro-riguilida .diaria {
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--rg-preto);
 }

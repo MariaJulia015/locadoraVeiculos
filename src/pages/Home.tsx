@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const atalhos = [
-  { to: "/grupos", titulo: "Grupos e preços", texto: "Valor da diária de cada grupo e veículos disponíveis." },
+  { to: "/carros", titulo: "Nossos carros", texto: "Modelos da frota, valor da diária e disponibilidade." },
   { to: "/locacoes/nova", titulo: "Nova locação", texto: "Registrar a retirada de um veículo." },
   { to: "/locacoes", titulo: "Locações", texto: "Consultar, devolver, pagar e emitir nota fiscal." },
   { to: "/veiculos", titulo: "Veículos", texto: "Frota e situação de cada veículo." },
