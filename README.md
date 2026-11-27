@@ -95,6 +95,9 @@ locadora-veiculos/
 ### Veículos e situação de cada um
 ![Veículos](prints/02-veiculos.png)
 
+### Modelos
+![Modelos](prints/12-modelos.png)
+
 ### Locações com filtros
 ![Locações](prints/03-locacoes.png)
 
