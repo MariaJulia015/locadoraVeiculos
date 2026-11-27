@@ -4,10 +4,18 @@ import { Alert } from "../../components/Alert";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 import { Input } from "../../components/Input";
+import { Modal } from "../../components/Modal";
 import { Select } from "../../components/Select";
 import { TextArea } from "../../components/TextArea";
 import type { Categoria } from "../../models/Categoria";
-import { cnhVencida, type Cliente } from "../../models/Cliente";
+import {
+  clienteInicial,
+  cnhVencida,
+  limparCliente,
+  validarCliente,
+  type Cliente,
+  type ErrosCliente,
+} from "../../models/Cliente";
 import { gerarNumeroContrato, termosPadrao } from "../../models/Contrato";
 import { calcularDiarias, calcularValorLocacao, locacaoInicial, type Locacao } from "../../models/Locacao";
 import type { Manutencao } from "../../models/Manutencao";
@@ -40,6 +48,9 @@ export const LocacaoForm = () => {
   const [observacoes, setObservacoes] = useState("");
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const [buscaCliente, setBuscaCliente] = useState("");
+  // Cadastro rápido de cliente sem sair da locação
+  const [novoCliente, setNovoCliente] = useState<Cliente | null>(null);
+  const [errosNovoCliente, setErrosNovoCliente] = useState<ErrosCliente>({});
   const [veiculos, setVeiculos] = useState<Veiculo[]>([]);
   const [modelos, setModelos] = useState<Modelo[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
@@ -94,6 +105,36 @@ export const LocacaoForm = () => {
   const selecionarCliente = (clienteId: string) => {
     setLocacao((atual) => ({ ...atual, clienteId }));
     setBuscaCliente("");
+  };
+
+  const abrirCadastroCliente = () => {
+    // Aproveita o que já foi digitado na busca: números viram CPF, texto vira nome
+    const digitado = buscaCliente.trim();
+    const pareceCpf = digitado !== "" && somenteNumeros(digitado).length === digitado.replace(/[.\-\s]/g, "").length;
+    setNovoCliente({ ...clienteInicial, nome: pareceCpf ? "" : digitado, cpf: pareceCpf ? digitado : "" });
+    setErrosNovoCliente({});
+  };
+
+  const alterarNovoCliente = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    setNovoCliente((atual) => (atual ? { ...atual, [name]: value } : atual));
+  };
+
+  const salvarNovoCliente = async () => {
+    if (!novoCliente) return;
+    try {
+      const dados = limparCliente(novoCliente);
+      const listaAtual = await clienteService.listar();
+      const errosEncontrados = validarCliente(dados, listaAtual);
+      setErrosNovoCliente(errosEncontrados);
+      if (Object.keys(errosEncontrados).length > 0) return;
+      const criado = await clienteService.criar(dados);
+      setClientes([...listaAtual, criado]);
+      selecionarCliente(criado.id ?? "");
+      setNovoCliente(null);
+    } catch (e) {
+      setErro(mensagemDeErro(e));
+    }
   };
 
   const nomeModelo = (veiculo: Veiculo): string | undefined =>
@@ -238,10 +279,10 @@ export const LocacaoForm = () => {
                         <li className="list-group-item d-flex justify-content-between align-items-center">
                           <span className="text-muted">Nenhum cliente encontrado.</span>
                           <Button
-                            label="Cadastrar cliente"
+                            label="Cadastrar agora"
                             variant="outline-primary"
                             size="sm"
-                            onClick={() => navigate("/clientes/novo")}
+                            onClick={abrirCadastroCliente}
                           />
                         </li>
                       )}
@@ -266,6 +307,12 @@ export const LocacaoForm = () => {
                         </li>
                       ))}
                     </ul>
+                  )}
+                  {termo.length < 2 && (
+                    <p className="small text-muted mb-3" style={{ marginTop: "-0.5rem" }}>
+                      Cliente novo?{" "}
+                      <Button label="Cadastrar na hora" variant="outline-primary" size="sm" onClick={abrirCadastroCliente} />
+                    </p>
                   )}
                 </>
               )}
@@ -351,6 +398,77 @@ export const LocacaoForm = () => {
           <Button label={salvando ? "Salvando..." : "Registrar locação"} type="submit" variant="success" disabled={salvando} />
         </div>
       </form>
+
+      <Modal
+        show={novoCliente !== null}
+        title="Cadastrar cliente"
+        confirmLabel="Cadastrar e selecionar"
+        confirmVariant="success"
+        size="lg"
+        onClose={() => setNovoCliente(null)}
+        onConfirm={salvarNovoCliente}
+      >
+        {novoCliente && (
+          <div className="row">
+            <div className="col-md-6">
+              <Input label="Nome" name="nome" value={novoCliente.nome} onChange={alterarNovoCliente} error={errosNovoCliente.nome} />
+            </div>
+            <div className="col-md-6">
+              <Input
+                label="CPF"
+                name="cpf"
+                value={novoCliente.cpf}
+                onChange={alterarNovoCliente}
+                placeholder="000.000.000-00"
+                error={errosNovoCliente.cpf}
+              />
+            </div>
+            <div className="col-md-6">
+              <Input label="Número da CNH" name="cnh" value={novoCliente.cnh} onChange={alterarNovoCliente} error={errosNovoCliente.cnh} />
+            </div>
+            <div className="col-md-6">
+              <Input
+                label="Validade da CNH"
+                name="validadeCnh"
+                type="date"
+                value={novoCliente.validadeCnh}
+                onChange={alterarNovoCliente}
+                error={errosNovoCliente.validadeCnh}
+              />
+            </div>
+            <div className="col-md-6">
+              <Input
+                label="Telefone"
+                name="telefone"
+                type="tel"
+                value={novoCliente.telefone}
+                onChange={alterarNovoCliente}
+                placeholder="(62) 99999-9999"
+                error={errosNovoCliente.telefone}
+              />
+            </div>
+            <div className="col-md-6">
+              <Input
+                label="E-mail"
+                name="email"
+                type="email"
+                value={novoCliente.email}
+                onChange={alterarNovoCliente}
+                error={errosNovoCliente.email}
+              />
+            </div>
+            <div className="col-12">
+              <Input
+                label="Endereço"
+                name="endereco"
+                value={novoCliente.endereco}
+                onChange={alterarNovoCliente}
+                error={errosNovoCliente.endereco}
+              />
+            </div>
+          </div>
+        )}
+      </Modal>
     </div>
   );
 }

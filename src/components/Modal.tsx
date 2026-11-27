@@ -8,15 +8,17 @@ interface ModalProps {
   onConfirm: () => void;
   children: ReactNode;
   confirmLabel?: string;
+  confirmVariant?: "danger" | "success" | "primary";
+  size?: "lg";
 }
 
-export const Modal = ({ show, title, onClose, onConfirm, children, confirmLabel = "Confirmar" }: ModalProps) => {
+export const Modal = ({ show, title, onClose, onConfirm, children, confirmLabel = "Confirmar", confirmVariant = "danger", size }: ModalProps) => {
   if (!show) return null;
 
   return (
     <>
       <div className="modal fade show d-block" tabIndex={-1} role="dialog" aria-modal="true">
-        <div className="modal-dialog modal-dialog-centered">
+        <div className={`modal-dialog modal-dialog-centered${size ? ` modal-${size}` : ""}`}>
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title">{title}</h5>
@@ -25,7 +27,7 @@ export const Modal = ({ show, title, onClose, onConfirm, children, confirmLabel 
             <div className="modal-body">{children}</div>
             <div className="modal-footer">
               <Button label="Cancelar" variant="secondary" onClick={onClose} />
-              <Button label={confirmLabel} variant="danger" onClick={onConfirm} />
+              <Button label={confirmLabel} variant={confirmVariant} onClick={onConfirm} />
             </div>
           </div>
         </div>

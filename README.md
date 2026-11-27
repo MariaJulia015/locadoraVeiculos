@@ -43,7 +43,7 @@ O arquivo `db.json` já vem com dados de exemplo (marcas, categorias, modelos, v
 
 **Processo de locação**
 - Veículos exibidos em cards com categoria, diária, situação, placa, cor e km. Nos carros disponíveis, o botão **Alugar** abre a nova locação com o veículo já selecionado.
-- Registro da locação buscando o cliente pelo nome ou CPF (sem precisar rolar uma lista), escolhendo um veículo disponível e as datas de retirada e devolução prevista.
+- Registro da locação buscando o cliente pelo nome ou CPF (sem precisar rolar uma lista) ou cadastrando um cliente novo na hora, sem sair da tela, escolhendo um veículo disponível e as datas de retirada e devolução prevista.
 - Cálculo automático do valor previsto: nº de diárias × valor da diária da categoria.
 - Contrato gerado automaticamente, com número único e data de emissão.
 - Vistoria de retirada (km, nível de combustível e observações).
@@ -100,6 +100,9 @@ locadora-veiculos/
 
 ### Nova locação (com validação de CNH vencida)
 ![Nova locação](prints/04-nova-locacao.png)
+
+### Cadastro de cliente na hora da locação
+![Cadastro rápido](prints/12-cadastro-rapido-cliente.png)
 
 ### Detalhes da locação
 ![Detalhes da locação](prints/05-detalhes-da-locacao.png)

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Alert } from "../../components/Alert";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
-import { clienteInicial, type Cliente } from "../../models/Cliente";
+import { clienteInicial, limparCliente, validarCliente, type Cliente, type ErrosCliente } from "../../models/Cliente";
 import { mensagemDeErro } from "../../models/formatadores";
 import { clienteService } from "../../service/clienteService";
 
@@ -11,7 +11,7 @@ export const ClienteForm = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [cliente, setCliente] = useState<Cliente>(clienteInicial);
-  const [erros, setErros] = useState<Partial<Record<keyof Cliente, string>>>({});
+  const [erros, setErros] = useState<ErrosCliente>({});
   const [erro, setErro] = useState("");
 
   useEffect(() => {
@@ -28,19 +28,9 @@ export const ClienteForm = () => {
   };
 
   const validar = async (dados: Cliente): Promise<boolean> => {
-    const novosErros: Partial<Record<keyof Cliente, string>> = {};
-    if (!dados.nome) novosErros.nome = "Informe o nome.";
-    if (!dados.cpf) novosErros.cpf = "Informe o CPF.";
-    if (!dados.cnh) novosErros.cnh = "Informe o número da CNH.";
-    if (!dados.validadeCnh) novosErros.validadeCnh = "Informe a validade da CNH.";
-    if (!dados.telefone) novosErros.telefone = "Informe o telefone.";
-    if (!dados.email) novosErros.email = "Informe o e-mail.";
-    if (!dados.endereco) novosErros.endereco = "Informe o endereço.";
-
     // RF06: CPF e CNH não podem se repetir
     const outros = (await clienteService.listar()).filter((outro) => outro.id !== id);
-    if (dados.cpf && outros.some((outro) => outro.cpf === dados.cpf)) novosErros.cpf = "Já existe um cliente com este CPF.";
-    if (dados.cnh && outros.some((outro) => outro.cnh === dados.cnh)) novosErros.cnh = "Já existe um cliente com esta CNH.";
+    const novosErros = validarCliente(dados, outros);
 
     setErros(novosErros);
     return Object.keys(novosErros).length === 0;
@@ -49,15 +39,7 @@ export const ClienteForm = () => {
   const salvar = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const dados: Cliente = {
-        ...cliente,
-        nome: cliente.nome.trim(),
-        cpf: cliente.cpf.trim(),
-        cnh: cliente.cnh.trim(),
-        telefone: cliente.telefone.trim(),
-        email: cliente.email.trim(),
-        endereco: cliente.endereco.trim(),
-      };
+      const dados = limparCliente(cliente);
       if (!(await validar(dados))) return;
       if (id) await clienteService.atualizar(id, dados);
       else await clienteService.criar(dados);
