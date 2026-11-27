@@ -14,7 +14,7 @@ import type { Manutencao } from "../../models/Manutencao";
 import type { Modelo } from "../../models/Modelo";
 import { calcularSituacaoVeiculo, descreverVeiculo, type Veiculo } from "../../models/Veiculo";
 import { niveisCombustivel, type NivelCombustivel } from "../../models/Vistoria";
-import { dataHoje, formatarMoeda, mensagemDeErro, somarDias } from "../../models/formatadores";
+import { dataHoje, formatarMoeda, mensagemDeErro } from "../../models/formatadores";
 import { categoriaService } from "../../service/categoriaService";
 import { clienteService } from "../../service/clienteService";
 import { contratoService } from "../../service/contratoService";
@@ -28,14 +28,13 @@ type ErrosLocacao = Partial<Record<keyof Locacao, string>>;
 
 export const LocacaoForm = () => {
   const navigate = useNavigate();
-  // Modelo e diárias escolhidos na tela "Nossos carros" (opcionais)
+  // Veículo escolhido pelo botão "Alugar" na tela de veículos (opcional)
   const [parametros] = useSearchParams();
-  const modeloEscolhido = parametros.get("modelo") ?? "";
-  const diariasEscolhidas = Number(parametros.get("diarias") ?? 0);
+  const veiculoEscolhido = parametros.get("veiculo") ?? "";
   const [locacao, setLocacao] = useState<Locacao>({
     ...locacaoInicial,
     dataRetirada: dataHoje(),
-    dataDevolucaoPrevista: diariasEscolhidas > 0 ? somarDias(dataHoje(), diariasEscolhidas) : "",
+    veiculoId: veiculoEscolhido,
   });
   const [nivelCombustivel, setNivelCombustivel] = useState<NivelCombustivel>("CHEIO");
   const [observacoes, setObservacoes] = useState("");
@@ -61,6 +60,8 @@ export const LocacaoForm = () => {
       .then(([listaClientes, listaVeiculos, listaModelos, listaCategorias, listaLocacoes, listaManutencoes]) => {
         setClientes(listaClientes);
         setVeiculos(listaVeiculos);
+        const veiculo = listaVeiculos.find((item) => item.id === veiculoEscolhido);
+        if (veiculo) setLocacao((atual) => ({ ...atual, kmRetirada: veiculo.kmRodado }));
         setModelos(listaModelos);
         setCategorias(listaCategorias);
         setLocacoes(listaLocacoes);
@@ -71,11 +72,8 @@ export const LocacaoForm = () => {
 
   const hoje = dataHoje();
   const veiculosDisponiveis = veiculos.filter(
-    (veiculo) =>
-      calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL" &&
-      (!modeloEscolhido || veiculo.modeloId === modeloEscolhido),
+    (veiculo) => calcularSituacaoVeiculo(veiculo.id ?? "", locacoes, manutencoes, hoje) === "DISPONIVEL",
   );
-  const nomeModeloEscolhido = modelos.find((modelo) => modelo.id === modeloEscolhido)?.nome;
 
   const nomeModelo = (veiculo: Veiculo): string | undefined =>
     modelos.find((modelo) => modelo.id === veiculo.modeloId)?.nome;
@@ -174,14 +172,6 @@ export const LocacaoForm = () => {
     <div className="container" style={{ maxWidth: 900 }}>
       <h1 className="h3 mb-3">Nova locação</h1>
       <Alert type="danger" message={erro} onClose={() => setErro("")} />
-      {nomeModeloEscolhido && (
-        <div className="alert alert-light border d-flex justify-content-between align-items-center">
-          <span>
-            Mostrando apenas veículos do modelo <strong>{nomeModeloEscolhido}</strong>.
-          </span>
-          <Button label="Ver todos" variant="outline-secondary" size="sm" onClick={() => navigate("/locacoes/nova")} />
-        </div>
-      )}
 
       <form onSubmit={salvar} noValidate>
         <Card title="Dados da locação">

@@ -83,14 +83,10 @@ body {
   border-color: var(--rg-rosa);
 }
 
-/* Tela "Nossos carros": um card por modelo */
+/* Cards de veículos e modelos */
 .carro-riguilida {
   border: 1px solid #e3e3e6;
   border-top: 4px solid var(--rg-preto);
-}
-
-.carro-riguilida.carro-destaque {
-  border-top-color: var(--rg-rosa);
 }
 
 .carro-riguilida .nome-carro {
@@ -106,20 +102,6 @@ body {
   font-size: 0.8rem;
 }
 
-.etiqueta-destaque {
-  background-color: var(--rg-rosa);
-  color: #ffffff;
-  border-radius: 2rem;
-  padding: 0.15rem 0.7rem;
-  font-size: 0.8rem;
-}
-
-.carro-riguilida .diaria {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--rg-preto);
-}
-
 .placa-riguilida {
   display: inline-block;
   border: 2px solid var(--rg-preto);
@@ -127,4 +109,9 @@ body {
   padding: 0 0.4rem;
   font-weight: 700;
   letter-spacing: 0.05em;
+}
+
+.diaria-riguilida {
+  font-size: 1.25rem;
+  color: var(--rg-preto);
 }

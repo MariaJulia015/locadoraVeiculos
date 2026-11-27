@@ -14,7 +14,7 @@ import {
   type SituacaoVeiculo,
   type Veiculo,
 } from "../../models/Veiculo";
-import { dataHoje, mensagemDeErro } from "../../models/formatadores";
+import { dataHoje, formatarMoeda, mensagemDeErro } from "../../models/formatadores";
 import { categoriaService } from "../../service/categoriaService";
 import { locacaoService } from "../../service/locacaoService";
 import { manutencaoService } from "../../service/manutencaoService";
@@ -98,7 +98,7 @@ export const VeiculoList = () => {
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <h1 className="h3 mb-1">Veículos</h1>
-          <p className="text-muted mb-0">Cada unidade da frota, com placa, quilometragem e situação.</p>
+          <p className="text-muted mb-0">A frota da Riguilida: diária, situação de cada carro e atalho para alugar.</p>
         </div>
         <Button label="Novo veículo" onClick={() => navigate("/veiculos/novo")} />
       </div>
@@ -124,10 +124,20 @@ export const VeiculoList = () => {
                     <span className={`badge ${corSituacao[situacao]}`}>{situacaoVeiculoLabel[situacao]}</span>
                   </div>
 
-                  <h2 className="h4 nome-carro mb-0">{modelo?.nome ?? "-"}</h2>
-                  <p className="text-muted mb-3">
-                    {marca?.nome} · {veiculo.anoFabricacao}
-                  </p>
+                  <div className="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h2 className="h4 nome-carro mb-0">{modelo?.nome ?? "-"}</h2>
+                      <p className="text-muted mb-3">
+                        {marca?.nome} · {veiculo.anoFabricacao}
+                      </p>
+                    </div>
+                    {categoria && (
+                      <div className="text-end">
+                        <strong className="diaria-riguilida">{formatarMoeda(categoria.valorLocacao)}</strong>
+                        <small className="text-muted d-block">por dia</small>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="d-flex justify-content-between border-top pt-3 mt-auto mb-3">
                     <div>
@@ -142,6 +152,14 @@ export const VeiculoList = () => {
                       <small className="text-muted d-block">Km rodado</small>
                       <strong>{veiculo.kmRodado.toLocaleString("pt-BR")}</strong>
                     </div>
+                  </div>
+
+                  <div className="d-grid mb-2">
+                    <Button
+                      label={situacao === "DISPONIVEL" ? "Alugar" : situacaoVeiculoLabel[situacao]}
+                      disabled={situacao !== "DISPONIVEL"}
+                      onClick={() => navigate(`/locacoes/nova?veiculo=${veiculo.id}`)}
+                    />
                   </div>
 
                   <div className="d-flex gap-2">

@@ -42,7 +42,7 @@ O arquivo `db.json` já vem com dados de exemplo (marcas, categorias, modelos, v
 - Histórico de manutenções por veículo (botão **Manutenções** na lista de veículos).
 
 **Processo de locação**
-- Tela **Nossos carros** com um card para cada modelo: categoria, marca e ano, unidades disponíveis, valor da diária e total pela quantidade de diárias escolhida, além da etiqueta "Mais alugado" no modelo com mais locações. O botão **Alugar** abre a nova locação já filtrada pelo modelo e com a devolução prevista preenchida; **Ver unidades** mostra placa, cor, km e situação de cada veículo.
+- Veículos exibidos em cards com categoria, diária, situação, placa, cor e km. Nos carros disponíveis, o botão **Alugar** abre a nova locação com o veículo já selecionado.
 - Registro da locação escolhendo o cliente, um veículo disponível e as datas de retirada e devolução prevista.
 - Cálculo automático do valor previsto: nº de diárias × valor da diária da categoria.
 - Contrato gerado automaticamente, com número único e data de emissão.
@@ -89,14 +89,11 @@ locadora-veiculos/
 ### Início
 ![Início](prints/01-inicio.png)
 
-### Nossos carros
-![Nossos carros](prints/11-nossos-carros.png)
-
 ### Veículos e situação de cada um
 ![Veículos](prints/02-veiculos.png)
 
 ### Modelos
-![Modelos](prints/12-modelos.png)
+![Modelos](prints/11-modelos.png)
 
 ### Locações com filtros
 ![Locações](prints/03-locacoes.png)

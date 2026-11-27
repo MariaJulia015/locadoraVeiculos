@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
-import { CarroList } from "./pages/carros/CarroList";
 import { ClienteForm } from "./pages/clientes/ClienteForm";
 import { ClienteList } from "./pages/clientes/ClienteList";
 import { DevolucaoForm } from "./pages/locacoes/DevolucaoForm";
@@ -26,7 +25,6 @@ function App() {
       <main className="pb-5">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/carros" element={<CarroList />} />
           <Route path="/locacoes" element={<LocacaoList />} />
           <Route path="/locacoes/nova" element={<LocacaoForm />} />
           <Route path="/locacoes/:id" element={<LocacaoDetalhe />} />
